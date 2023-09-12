@@ -1,0 +1,13 @@
+.home {
+  
+    background-image: url('../j1.jpg'); /* Replace 'path-to-your-background-image.jpg' with the actual path to your image file */
+    background-size: cover; /* Cover the entire container with the background image */
+    background-repeat: no-repeat; 
+    /* Prevent background image from repeating */
+    min-height: 100vh; /* Set a minimum height to ensure the background covers the entire viewport */
+    display: flex;
+    flex-direction: column; /* Ensures child elements stack vertically */
+     /* Center child elements horizontally */
+     /* Center child elements vertically */
+  }
+  

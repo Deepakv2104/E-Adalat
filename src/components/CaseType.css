@@ -1,0 +1,29 @@
+/* CaseType.css */
+.typecontainer{
+    padding-top: 200px;
+}
+.case-box {
+    padding: 20px;
+    
+    background-color:#112D32;
+    border-radius: 5px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+  }
+  .case-box h2{
+    color: white;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size:35px ;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+  }
+  
+  .case-box:hover {
+    box-shadow: 0 0 20px #1f4037;
+  }
+  
