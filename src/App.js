@@ -11,6 +11,7 @@ import CaseType from "./components/CaseType";
 import NewCriminalCaseCard from "./components/NewCriminialCaseCard";
 import CaseList from "./components/CaseList";
 import CaseDetailsRoute from "./components/CaseDetials";
+import CaseDetails from "./components/CaseDetials";
 
 const App = () => {
   return (
@@ -24,32 +25,19 @@ const App = () => {
           <Route path="" element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="new-cases" element={<CaseType />} />
-          <Route
-            path="new-cases/civil-case"
-            element={<NewCivilCaseCard isViewMode={true} />}
-          />
-          <Route path="cases" element={<CaseList />}>
+          <Route path="new-cases/civil-case" element={<NewCivilCaseCard isViewMode={true} />}/>
+          <Route path="new-cases/criminal-case" element={<NewCriminalCaseCard />}/>
+          <Route path="cases" element={<CaseList />}/>
+          <Route path="cases/caseDetails/:documentId" element={<CaseDetails/>} />
           
 
-          {/* Route for viewing case details */}
-          <Route
-            path="caseDetails/:caseNumber"
-            element={<CaseDetailsRoute isViewMode={true} />}
-          />
-          </Route>
-          {/* Route for creating a new case */}
+
+          
+
          
-
-          <Route
-            path="new-cases/criminal-case"
-            element={<NewCriminalCaseCard />}
-          />
-
-          
-          {/* Add more nested routes as needed */}
         </Route>
 
-        {/* Add other routes here */}
+       
       </Routes>
     </div>
   );

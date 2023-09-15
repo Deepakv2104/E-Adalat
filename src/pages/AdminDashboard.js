@@ -3,15 +3,19 @@ import { Outlet, useNavigate } from "react-router-dom"; // Import the useNavigat
 import Navbar from "../components/Navbar";
 import NewCaseCard from "../components/NewCivilCaseCard";
 import "./AdminDashboard.css";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+
+
 import {
   faPieChart,
   faTags,
   faCalendarDays,
   faUser,
   faGear,
+  
 } from "@fortawesome/free-solid-svg-icons";
+import { FormGroup, Label, Input, Button } from "reactstrap";
 
 const AdminDashboard = () => {
   const navigate = useNavigate(); // Initialize the navigate function
@@ -97,6 +101,12 @@ const AdminDashboard = () => {
               </li>
             </ul>
           </div>
+          <Button color="primary"
+        style={{ margin: "10px",height:'40px', color:'white'}}
+        onClick={() => window.history.back()}
+      >
+        <FontAwesomeIcon icon={faArrowLeft} />
+      </Button>
           <div className="content">
             <Outlet/>
             {/* Define other routes and components as needed */}

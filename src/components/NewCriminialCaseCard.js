@@ -171,7 +171,7 @@ const NewCriminalCaseCard = () => {
           <Input
             type="date"
             id="selectedDate"
-            name="selectedDate"
+            name="date"
             value={formData.accusedDOB}
             onChange={handleChange}
           />

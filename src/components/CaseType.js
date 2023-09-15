@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./CaseType.css"; // Import the CSS file
+import "../styles/CaseType.css"; // Import the CSS file
 
 const CaseType = () => {
   const navigate = useNavigate();

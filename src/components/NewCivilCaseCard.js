@@ -32,6 +32,7 @@ import {
   faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 import CivilTypeDropdown from "./CivilDropdown";
+import CaseDetails from "./CaseDetials";
 const NewCivilCaseCard = ({caseData,isViewMode}) => {
   const navigate = useNavigate();
   const [selectedState, setSelectedState] = useState("");
@@ -121,7 +122,7 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
       updatedFormData.imageUrls = downloadUrls;
 
       // Add the updated data to Firestore with image URLs
-      const caseDocRef = doc(firestore, "Cases", docRef.id);
+      const caseDocRef = doc(firestore, "CivilCases", docRef.id);
       const caseDocSnapshot = await getDoc(caseDocRef);
       
       if (caseDocSnapshot.exists()) {
@@ -138,7 +139,7 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
 
       // Notify success with a toast
 
-      toast.success("Form submitted successfully!", {
+      toast.success("Record submitted successfully!", {
         position: "top-right",
         autoClose: 2000, // 5 seconds
         hideProgressBar: false,
@@ -261,8 +262,8 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
           <Label for="date">Date of filing: </Label>
           <Input
             type="date"
-            id="selectedDate"
-            name="selectedDate"
+            id="date"
+            name="dateoffiling"
             value={formData.dateoffiling}
             onChange={handleChange}
           />
@@ -378,10 +379,10 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
             
           </Col>
         </FormGroup> } */}
-        <Button>Submit</Button>
+        <Button color="info" style={{position:'relative',margin:'10px',marginLeft:'500px',fontSize:'20px'}}>Submit</Button>
       </Form>
       <ToastContainer />
-    </div>):("hello")}
+    </div>):(<CaseDetails/>)}
     </div>
   );
 };

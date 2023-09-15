@@ -3,6 +3,7 @@ import { useParams ,useNavigate} from "react-router-dom";
 import { collection, getDocs, query, where, orderBy, startAt, endAt } from "@firebase/firestore";
 import { firestore } from "../firebase";
 import { Table, Input } from "reactstrap";
+import '../styles/CaseList.css'
 
 const CaseList = () => {
     const navigate = useNavigate();
@@ -48,7 +49,7 @@ const CaseList = () => {
   };
 
   return (
-    <div style={{
+    <div className="main-container"style={{
         padding: "50px",
         paddingLeft: "30px",
         paddingRight: "30px",
@@ -68,7 +69,7 @@ const CaseList = () => {
       <Table striped>
         <thead>
           <tr>
-            <th>Case Number</th>
+            <th >Case Number</th>
             
             {/* Add more table headers for other case properties */}
           </tr>

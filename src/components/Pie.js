@@ -1,6 +1,6 @@
 import React from "react";
 import CanvasJSReact from "@canvasjs/react-charts";
-import "./Pie.css";
+import "../styles/Pie.css";
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 

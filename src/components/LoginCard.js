@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate ,browserHistory} from 'react-router-dom'; // Import useNavigate
-import './LoginCard.css';
+import '../styles/LoginCard.css';
 import JudgeLoginForm from './JudgeLoginForm';
 import LitigantLoginForm from './LitigantLoginForm';
 import AdminLoginForm from './AdminLoginForm';
