@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/LoginCard.css';
-import JudgeLoginForm from './JudgeLoginForm';
-import LitigantLoginForm from './LitigantLoginForm';
-import AdminLoginForm from './AdminLoginForm';
-import LawyerLoginForm from './LawyerLoginForm';
+import '../styles/SignUpCard.css';
+import JudgeSignupForm from './JudgeSignupForm';
+import LawyerSignupForm from './LawyerSignupForm';
+import AdminSignupForm from './AdminSignupForm';
+import LitigantSignupForm from './LitigantSignupForm';
 
 
-const LoginCard = () => {
+
+const SignUpCard = () => {
   const [isSignupVisible, setIsSignupVisible] = useState(false);
   const [selectedRole, setSelectedRole] = useState('litigant');
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const LoginCard = () => {
     setSelectedRole(event.target.value);
   };
 
-  const handleLogin = () => {
+  const handlesignup = () => {
     switch (selectedRole) {
       case 'judge':
         navigate('judge-Dashboard');
@@ -41,17 +42,32 @@ const LoginCard = () => {
 
   const renderForm = () => {
     if (isSignupVisible) {
-        {navigate('/sign-up')}
+        switch (selectedRole) {
+            case 'judge':
+                navigate('judge-signup-form');
+                break;
+            case 'litigant':
+                navigate('litigant-signup-form');
+                break;
+            case 'admin':
+                navigate('admin-signup-form');
+                break;
+            case 'lawyer':
+              navigate('lawyer-signup-form');
+              break;
+            default:
+              break;
+        }
     } else {
         switch (selectedRole) {
             case 'judge':
-                return <JudgeLoginForm />;
+                return <JudgeSignupForm/>;
             case 'litigant':
-                return <LitigantLoginForm />;
+                return <LitigantSignupForm/>;
             case 'admin':
-                return <AdminLoginForm />;
+                return <AdminSignupForm />;
             case 'lawyer':
-                return <LawyerLoginForm />;
+                return <LawyerSignupForm />;
             default:
                 return null;
         }
@@ -60,9 +76,9 @@ const LoginCard = () => {
 
 
   return (
-    <div className="login-card">
+    <div className="signup-card">
       <div className="card-inner">
-        <h2>{isSignupVisible ? 'Sign Up' : 'Login'}</h2>
+        <h2>{isSignupVisible ? 'Sign In' : 'sign Up'}</h2>
         <div className="form-group" style={{ display: 'flex' }}>
           <label htmlFor="role" style={{ paddingRight: '30px' }}>
             Select Role:
@@ -78,17 +94,14 @@ const LoginCard = () => {
             <option value="admin">Admin</option>
             <option value="lawyer">Lawyer</option>
           </select>
+          
         </div>
         {renderForm()}
-        <p className="toggle-link">
-          {isSignupVisible ? "Already a user?" : "Don't have an account?"}
-          <button onClick={toggleFormVisibility}>
-            {isSignupVisible ? 'Sign In' : 'Sign Up'}
-          </button>
-        </p>
+        
       </div>
+      
     </div>
   );
 };
 
-export default LoginCard;
+export default SignUpCard;

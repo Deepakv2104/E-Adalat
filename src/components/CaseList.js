@@ -70,7 +70,8 @@ const CaseList = () => {
         <thead>
           <tr>
             <th >Case Number</th>
-            
+            <th >Date of filing</th>
+            <th>Status</th>
             {/* Add more table headers for other case properties */}
           </tr>
         </thead>
@@ -83,8 +84,11 @@ const CaseList = () => {
             >
               <td>{c.caseNumber}</td>
               
+              <td>{c.dateoffiling}</td>
+              <td>{c.state}</td>
               {/* Add more table cells for other case properties */}
             </tr>
+            
           ))}
         </tbody>
       </Table>

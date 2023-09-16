@@ -12,6 +12,8 @@ import NewCriminalCaseCard from "./components/NewCriminialCaseCard";
 import CaseList from "./components/CaseList";
 import CaseDetailsRoute from "./components/CaseDetials";
 import CaseDetails from "./components/CaseDetials";
+import JudgeDashboard from "./pages/JudgeDashboard"
+import SignUpCard from "./components/SignUpCard";
 
 const App = () => {
   return (
@@ -19,8 +21,25 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />}>
           <Route path="login" element={<LoginCard />} />
+          <Route path='sign-up' element={<SignUpCard/>}/>
         </Route>
         <Route path="/login/admin-dashboard" element={<AdminDashboard />}>
+          {/* Nested routes for AdminDashboard */}
+          <Route path="" element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="new-cases" element={<CaseType />} />
+          <Route path="new-cases/civil-case" element={<NewCivilCaseCard isViewMode={true} />}/>
+          <Route path="new-cases/criminal-case" element={<NewCriminalCaseCard />}/>
+          <Route path="cases" element={<CaseList />}/>
+          <Route path="cases/caseDetails/:documentId" element={<CaseDetails/>} />
+          
+
+
+          
+
+         
+        </Route>
+        <Route path="/login/judge-dashboard" element={<JudgeDashboard />}>
           {/* Nested routes for AdminDashboard */}
           <Route path="" element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />

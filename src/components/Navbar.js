@@ -16,8 +16,8 @@ function Navbar() {
       <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{background:'#112D32',width:'100%',height:'5px'}}>
       {/* <Sidebar/> */}
         <div className="container-fluid"  >
-          <div style={{fontFamily:"Bold",width:"50" ,height:"40" ,display:"flex",marginTop:'10px'}}>
-             <h2 style={{color:'white'}}>e-ADAALAT</h2>
+          <div  style={{fontFamily:"Bold",width:"50" ,height:"40" ,display:"flex",marginTop:'10px',cursor:'pointer'}} onClick={() => handleNavigate("/")}>
+             <h2 aria-current="page" href="/" style={{color:'white'}}>e-ADAALAT</h2>
             <img src={logo} alt="E-Adalat Logo" className="mr-2" width="50" height="40" />
             </div>
           {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">

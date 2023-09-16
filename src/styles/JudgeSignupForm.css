@@ -1,0 +1,40 @@
+
+.jsuf {
+    width: 60%;
+    height: 48%;
+    padding: 10px;
+}
+
+.jsuf .input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; 
+    width: auto;/* or however much space you want between rows */
+}
+
+.jsuf .form {
+    display: flex;  
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.jsuf .form-group {
+    width: auto;
+}
+
+.jsuf .full-width {
+    width: 100%;
+}
+
+.jsuf .label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.jsuf .form-control {
+    width: 100%;
+}
+.button{
+    display: flex;
+    padding-left: 100px;
+}

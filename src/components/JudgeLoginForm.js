@@ -15,7 +15,7 @@ const JudgeLoginForm = () => {
 
   const handleLogin = () => {
     // Implement login logic for judges
-    navigate('/judgeDashboard');
+    navigate('judge-Dashboard');
   };
 
   return (
