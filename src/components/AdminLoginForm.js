@@ -27,15 +27,15 @@ const AdminLoginForm = () => {
 
   return (
     <form>
-      <div className="form-group">
+      <div >
         <label htmlFor="username">Username</label>
         <input type="text" id="username" value={username} onChange={handleUsernameChange} />
       </div>
-      <div className="form-group">
+      <div >
         <label htmlFor="password">Password</label>
         <input type="password" id="password" value={password} onChange={handlePasswordChange} />
       </div>
-      <div className="form-group">
+      <div >
         <label htmlFor="adminCode">Admin Code</label>
         <input type="text" id="adminCode" value={adminCode} onChange={handleAdminCodeChange} />
       </div>

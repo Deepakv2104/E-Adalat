@@ -1,0 +1,9 @@
+
+ .ac tbody tr td{
+     color: black;
+    
+ }
+ .ac tbody tr td:hover{
+     color:blue;
+ }
+ 

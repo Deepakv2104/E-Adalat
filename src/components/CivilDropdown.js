@@ -4,23 +4,19 @@ const CivilTypeDropdown = ({ onTypeChange }) => {
   const [selectedType, setSelectedType] = useState("");
 
   const caseTypes = [
-    "Select Type",
     "Contract Disputes",
-    "Personal Injury Cases",
+    "Torts (Negligence, Defamation, etc.)",
     "Property Disputes",
-    "Family Law Cases",
-    "Employment Cases",
-    "Consumer Protection Cases",
-    "Debt Collection Cases",
-    "Tort Claims",
-    "Medical Malpractice",
-    "Environmental Cases",
-    "Intellectual Property Cases",
-    "Construction Disputes",
-    "Probate and Estate Cases",
-    "Civil Rights Cases",
-    "Business and Commercial Litigation",
-    "Insurance Claims",
+    "Family Matters (Divorce, Custody, Alimony, etc.)",
+    "Administrative Law",
+    "Intellectual Property (Patents, Trademarks, Copyrights)",
+    "Tax Law",
+    "Trust and Estates (Wills, Successions)",
+    "Real Estate (Landlord-Tenant)",
+    "Consumer Cases",
+    "Cyber Law",
+    "Environmental Law",
+    "Labor and Employment",
     // Add more case types here
   ];
 
@@ -29,13 +25,14 @@ const CivilTypeDropdown = ({ onTypeChange }) => {
     setSelectedType(selectedType);
 
     // Pass the selected type to the parent component using the callback function
-    onTypeChange(selectedType);
+    onTypeChange(selectedType); 
   };
 
   return (
-    <div style={{display:"flex",padding:'20px'}}>
-      <label style={{paddingRight:'10px'}}>Select Type of Civil Case:</label>
-      <select  value={selectedType} onChange={handleTypeChange}>
+    <div style={{ display: "flex", padding: "20px" }}>
+      <label style={{ paddingRight: "10px" }}>Select Type of Civil Case:</label>
+      
+      <select value={selectedType} onChange={handleTypeChange}>
         {caseTypes.map((caseType, index) => (
           <option key={index} value={caseType}>
             {caseType}

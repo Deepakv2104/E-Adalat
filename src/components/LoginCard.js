@@ -63,7 +63,7 @@ const LoginCard = () => {
     <div className="login-card">
       <div className="card-inner">
         <h2>{isSignupVisible ? 'Sign Up' : 'Login'}</h2>
-        <div className="form-group" style={{ display: 'flex' }}>
+        <div  style={{ display: 'flex' }}>
           <label htmlFor="role" style={{ paddingRight: '30px' }}>
             Select Role:
           </label>

@@ -1,15 +1,21 @@
 import React from 'react';
 import logo from '../images/j3.png'; // Replace with the actual path to your logo image
 import Sidebar from './SideBar';
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate ,useLocation} from "react-router-dom";
 
 function Navbar() {
  
     const navigate = useNavigate(); // Initialize the navigate function
-  
+    const location = useLocation();
     // Handle navigation when clicking on links
     const handleNavigate = (path) => {
-      navigate(path);}
+      navigate(path);} 
+      const getAuthLinkText = () => {
+        if (location.pathname.includes('login/judge-Dashboard')) {
+          return 'Logout';
+        }
+        return 'Login/SignUp';
+      }
   return (
     <div style={{position:'sticky'}}> 
       
@@ -26,7 +32,7 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto mb-2 mb-lg-0 justify-content-end">
             <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/login" style={{color:'white'}} onClick={() => handleNavigate("login")}>Login/SignUp</a>
+                <a className="nav-link active" aria-current="page" href="/login" style={{color:'white'}} onClick={() => handleNavigate("login")}>{getAuthLinkText()}</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="/" style={{color:'white'}}>Home</a>

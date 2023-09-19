@@ -8,6 +8,7 @@ import { updateDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { firestore } from "../firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CaseDistributor from './CaseDistributor';
 import {
   FormGroup,
   Label,
@@ -33,16 +34,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import CivilTypeDropdown from "./CivilDropdown";
 import CaseDetails from "./CaseDetials";
-const NewCivilCaseCard = ({caseData,isViewMode}) => {
+import CaseTypeForm from "./CaseTypeForm";
+const NewCivilCaseCard = ({ caseData, isViewMode }) => {
   const navigate = useNavigate();
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedCourt, setSelectedCourt] = useState("");
   const [selectedCivilType, setSelectedCivilType] = useState("");
+  const [caseType, setCaseType] = useState(''); 
+  const [specificType, setSpecificType] = useState('');
 
   const [formData, setFormData] = useState({
     title: "",
-
+    caseType:"",
+    specificType:"",
     plaintiffName: "",
     plaintiffs_Attorney: "",
     defendantName: "",
@@ -52,7 +57,7 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
     state: "",
     city: "",
     court: "",
-    civiltype: "",
+    
     // firTiming: "",
     // numberOfAccused: "",
     // reliefSought: "",
@@ -81,17 +86,21 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
     const randomCNRNumber = generateRandomNumber();
     const updatedFormData = {
       ...formData,
+      caseType: caseType,
+      specificType: specificType,
       caseNumber: randomCNRNumber,
       state: selectedState,
       city: selectedCity,
       court: selectedCourt,
-      civiltype: selectedCivilType,
+    
     };
     console.log(updatedFormData);
     setSelectedState("");
-      setSelectedCity("");
-      setSelectedCourt("");
-      setSelectedCivilType("");
+    setSelectedCity("");
+    setSelectedCourt("");
+    setSelectedCivilType("");
+    setCaseType("");
+    setSpecificType("");
 
     try {
       // Add the chargesheet data to the "Cases" collection
@@ -124,7 +133,7 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
       // Add the updated data to Firestore with image URLs
       const caseDocRef = doc(firestore, "CivilCases", docRef.id);
       const caseDocSnapshot = await getDoc(caseDocRef);
-      
+
       if (caseDocSnapshot.exists()) {
         // Update the existing document
         await updateDoc(caseDocRef, updatedFormData);
@@ -137,6 +146,14 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
 
       console.log("Document written with ID: ", docRef.id);
 
+        // Now that the case is added, distribute it to a judge
+        const assignedJudge = await CaseDistributor(updatedFormData);
+        console.log(assignedJudge);
+        if (assignedJudge) {
+          console.log("Case assigned to: ", assignedJudge.name); // Assuming the judge object has a 'name' property
+        } else {
+          console.log("No matching judge found for the case");
+        }
       // Notify success with a toast
 
       toast.success("Record submitted successfully!", {
@@ -162,7 +179,6 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
         court: "",
         civiltype: "",
         // ... other form fields you want to reset
-        
       });
     } catch (error) {
       console.error("Error submitting data: ", error);
@@ -180,7 +196,7 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(name, value);
+    // console.log(name, value);
     setFormData({
       ...formData,
       [name]: value,
@@ -188,98 +204,109 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
   };
   return (
     <div>
-      {isViewMode ? (<div
-      style={{
-        padding: "50px",
-        paddingLeft: "30px",
-        paddingRight: "30px",
-        margin: "10px",
-        background: "white",
-        boxShadow: "0 5px 25px -5px rgba(0,0,0,2.1)",
-        overflow: "scroll",
-      }}
-    >
-      <div style={{ fontFamily: "bold", fontWeight: "700" }}>
-        <h1>NEW CIVIL CASE</h1>
-      </div>
-      <Form onSubmit={handleSubmit}>
-        <LocationBar onSelectedOptions={handleSelectedOptions} />
-        <CivilTypeDropdown onTypeChange={handleTypeChange} />
-        <FormGroup>
-          <Label for="title">Title </Label>
-          <Input
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="caseNumber">Plaintiff Name: </Label>
-          <Input
-            id="plaintiffName"
-            name="plaintiffName"
-            //placeholder="with a placeholder"
-            type="plaintiffName"
-            value={formData.plaintiffName}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="plaintiffs_Attorney">Plaintiff's Attorney: </Label>
-          <Input
-            id="plaintiffs_Attorney"
-            name="plaintiffs_Attorney"
-            //placeholder="with a placeholder"
-            type="plaintiffs_Attorney"
-            value={formData.plaintiffs_Attorney}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="defendantName">Defendent Name:</Label>
-          <Input
-            id="defendantName"
-            name="defendantName"
-            //placeholder="url placeholder"
-            type="defendantName"
-            value={formData.defendantName}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="allegations">Allegations/Claims of plaintiff: </Label>
-          <Input
-            id="allegations"
-            name="allegations"
-            //placeholder="with a placeholder"
-            type="allegations"
-            value={formData.allegations}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="date">Date of filing: </Label>
-          <Input
-            type="date"
-            id="date"
-            name="dateoffiling"
-            value={formData.dateoffiling}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="witnessName">Witness Name:</Label>
-          <Input
-            id="witnessName"
-            name="witnessName"
-            //placeholder="url placeholder"
-            type="witnessName"
-            value={formData.witnessName}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        {/* <FormGroup>
+      {isViewMode ? (
+        <div
+          style={{
+            padding: "50px",
+            paddingLeft: "30px",
+            paddingRight: "30px",
+            margin: "10px",
+            background: "white",
+            boxShadow: "0 5px 25px -5px rgba(0,0,0,2.1)",
+            overflow: "scroll",
+          }}
+        >
+          <div style={{ fontFamily: "bold", fontWeight: "700" }}>
+            <h1>NEW CIVIL CASE</h1>
+          </div>
+          <Form onSubmit={handleSubmit}>
+           <FormGroup style={{}}>
+           <LocationBar  onSelectedOptions={handleSelectedOptions} />
+           <p  style={{paddingTop:'20px',fontSize:'16px'}}>
+           <CaseTypeForm
+           
+           caseType={caseType}
+           setCaseType={setCaseType}
+           specificType={specificType}
+           setSpecificType={setSpecificType}
+         />
+           </p>
+           </FormGroup>
+            <FormGroup>
+              <Label for="title">Title </Label>
+              <Input
+                id="title"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="caseNumber">Plaintiff Name: </Label>
+              <Input
+                id="plaintiffName"
+                name="plaintiffName"
+                //placeholder="with a placeholder"
+                type="plaintiffName"
+                value={formData.plaintiffName}
+                onChange={handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="plaintiffs_Attorney">Plaintiff's Attorney: </Label>
+              <Input
+                id="plaintiffs_Attorney"
+                name="plaintiffs_Attorney"
+                //placeholder="with a placeholder"
+                type="plaintiffs_Attorney"
+                value={formData.plaintiffs_Attorney}
+                onChange={handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="defendantName">Defendent Name:</Label>
+              <Input
+                id="defendantName"
+                name="defendantName"
+                //placeholder="url placeholder"
+                type="defendantName"
+                value={formData.defendantName}
+                onChange={handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="allegations">Allegations/Claims of plaintiff: </Label>
+              <Input
+                id="allegations"
+                name="allegations"
+                //placeholder="with a placeholder"
+                type="allegations"
+                value={formData.allegations}
+                onChange={handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="date">Date of filing: </Label>
+              <Input
+                type="date"
+                id="date"
+                name="dateoffiling"
+                value={formData.dateoffiling}
+                onChange={handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="witnessName">Witness Name:</Label>
+              <Input
+                id="witnessName"
+                name="witnessName"
+                //placeholder="url placeholder"
+                type="witnessName"
+                value={formData.witnessName}
+                onChange={handleChange}
+              />
+            </FormGroup>
+            {/* <FormGroup>
           <Label for="exampleTime">FIR Timing</Label>
           <Input
             id="exampleTime"
@@ -291,7 +318,7 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
           />
         </FormGroup> */}
 
-        {/* <FormGroup>
+            {/* <FormGroup>
           <Label for="exampleNumber">Number of Accused: </Label>
           <Input
             id="exampleNumber"
@@ -302,29 +329,29 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
             onChange={handleChange}
           />
         </FormGroup> */}
-        <FormGroup>
-          <Label for="reliefSought">Relief Sought:</Label>
-          <Input
-            id="reliefSought"
-            name="reliefSought"
-            //placeholder="datetime placeholder"
-            type="reliefSought"
-            value={formData.reliefSought}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="legalBais">Legal Basis for the Claims:</Label>
-          <Input
-            id="elegalBais"
-            name="legalBais"
-            //placeholder="date placeholder"
-            type="text"
-            value={formData.legalBais}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        {/* <FormGroup>
+            <FormGroup>
+              <Label for="reliefSought">Relief Sought:</Label>
+              <Input
+                id="reliefSought"
+                name="reliefSought"
+                //placeholder="datetime placeholder"
+                type="reliefSought"
+                value={formData.reliefSought}
+                onChange={handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="legalBais">Legal Basis for the Claims:</Label>
+              <Input
+                id="elegalBais"
+                name="legalBais"
+                //placeholder="date placeholder"
+                type="text"
+                value={formData.legalBais}
+                onChange={handleChange}
+              />
+            </FormGroup>
+            {/* <FormGroup>
           <Label for="exampleTime">Time</Label>
           <Input
             id="exampleTime"
@@ -348,20 +375,20 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
           </Input>
         </FormGroup> */}
 
-        {/* <FormGroup>
+            {/* <FormGroup>
           <Label for="exampleText">Text Area</Label>
           <Input id="exampleText" name="text" type="textarea" />
         </FormGroup> */}
-        <FormGroup>
-          <Label for="exampleFile">Files</Label>
-          <Input id="exampleFile" name="file" type="file" multiple />
-          <FormText>
-            This is some placeholder block-level help text for the above input.
-            It‘s a bit lighter and easily wraps to a new line.
-          </FormText>
-        </FormGroup>
+            <FormGroup>
+              <Label for="exampleFile">Files</Label>
+              <Input id="exampleFile" name="file" type="file" multiple />
+              <FormText>
+                This is some placeholder block-level help text for the above
+                input. It‘s a bit lighter and easily wraps to a new line.
+              </FormText>
+            </FormGroup>
 
-        {/* <FormGroup check>
+            {/* <FormGroup check>
           <Input type="radio" /> Option one is this and that—be sure to
           <Label check>include why it‘s great</Label>
         </FormGroup>
@@ -379,10 +406,23 @@ const NewCivilCaseCard = ({caseData,isViewMode}) => {
             
           </Col>
         </FormGroup> } */}
-        <Button color="info" style={{position:'relative',margin:'10px',marginLeft:'500px',fontSize:'20px'}}>Submit</Button>
-      </Form>
-      <ToastContainer />
-    </div>):(<CaseDetails/>)}
+            <Button
+              color="info"
+              style={{
+                position: "relative",
+                margin: "10px",
+                marginLeft: "500px",
+                fontSize: "20px",
+              }}
+            >
+              Submit
+            </Button>
+          </Form>
+          <ToastContainer />
+        </div>
+      ) : (
+        <CaseDetails />
+      )}
     </div>
   );
 };

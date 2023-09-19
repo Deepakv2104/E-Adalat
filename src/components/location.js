@@ -197,8 +197,8 @@ const LocationBar = ({onSelectedOptions}) => {
   };
 
   return (
-    <div style={{display:"flex",padding:'20px'}}>
-      <label style={{paddingRight:'10px'}}>Select State:</label>
+    <div style={{display:"flex"}}>
+      <label>Select State:</label>
       <select value={selectedState} onChange={handleStateChange}>
         {states.map((state, index) => (
           <option key={index} value={state}>

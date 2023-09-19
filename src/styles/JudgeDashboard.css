@@ -1,0 +1,134 @@
+.JudgeDashboard{
+    
+    position: relative;
+    /* height: 100%; */
+    height: 650px;
+    background: #8e9eab; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #8e9eab, #eef2f3); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #8e9eab, #eef2f3);
+    overflow-y:sticky;
+    
+   
+}
+
+
+.sidebar {
+  background-color: #88bdbc;
+  /* color: black; */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: -101%;
+  height: 650px;
+  ;
+  
+  width: 250px;
+  
+  
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar h2 {
+  font-size: 30px; /* Adjust the font size as needed */
+  font-weight: bold;
+}
+.sidebar li {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  font-size: larger;
+  font-family: bold;
+  font-weight:700;
+  color: black;
+  cursor: pointer;
+}
+.sidebar li:hover{
+  color: white;
+ 
+}
+
+.sidebar span {
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+.sidebar span:hover {
+  transform: scale(1.1); /* Adjust the scale factor as needed */
+  color:white;
+  transition: box-shadow 0.3s;
+}
+.container{
+   
+box-shadow: 0 5px 25px -5px rgba(0,0,0,2.1);  
+background:white;
+
+margin-bottom: 50px;
+border-radius:12px;
+padding:40px;
+/* height: 900px; */
+border-radius: 10px;
+scroll-behavior: smooth;
+
+
+
+}
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+/* SplitScreenPage.css */
+.split-screen {
+    display: flex;
+    height: 100%; 
+  }
+
+
+  
+  /* .navbar {
+    flex: 0; 
+    background-color: #333;
+    color: white;
+    padding: 100px;
+    box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.2);
+    position: static;
+  }
+  
+  .navbar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .navbar li {
+    margin-bottom: 10px;
+  }
+   */
+  .content {
+     flex: 4;
+  padding: 20px;
+  overflow: scroll;
+  ;
+  }
+  .content::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Optional styling for better aesthetics */
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: sticky;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    
+  }
+  
+  p {
+    font-size: 18px;
+  }
+  

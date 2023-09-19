@@ -1,10 +1,10 @@
 .signup-card{
-    width: 1200px;
-    height: 565px;
+    width: 1000px;
+    height: 510px;
     margin: 0 auto;
     /* margin-top: 10px; */
     position: relative;
-    perspective: 1000px;
+    /* perspective: 1000px; */
     transform-style: preserve-3d;
     transition: transform 0.5s ease-in-out;
     background-color: #fff;
@@ -13,4 +13,14 @@
      bottom: 30px;
      box-shadow: 10px 10px 5px rgb(74, 71, 71);
      overflow: scroll;
+    
+}
+.signup-card h2{
+    font-weight: 600;
+}
+.card-iner{
+       margin: 20px;
+}
+.form-group{
+    padding-left: 300px;
 }

@@ -26,15 +26,15 @@ const LitigantLoginForm = () => {
 
   return (
     <form>
-      <div className="form-group">
+      <div>
         <label htmlFor="username">Username</label>
         <input type="text" id="username" value={username} onChange={handleUsernameChange} />
       </div>
-      <div className="form-group">
+      <div >
         <label htmlFor="password">Password</label>
         <input type="password" id="password" value={password} onChange={handlePasswordChange} />
       </div>
-      <div className="form-group">
+      <div >
         <label htmlFor="caseNumber">Case Number</label>
         <input type="text" id="caseNumber" value={caseNumber} onChange={handleCaseNumberChange} />
       </div>

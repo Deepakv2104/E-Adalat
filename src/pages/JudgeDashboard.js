@@ -41,10 +41,10 @@ const JudgeDashboard = () => {
                   style={{  paddingLeft: "20px" }}
                 />
                 <span
-                  onClick={() => handleNavigate("dashboard")}
+                  onClick={() => handleNavigate("assigned-cases")}
                   style={{ paddingLeft: "20px" }}
                 >
-                  New Cases
+                  Assigned Cases
                 </span>
               </li>
               <hr />
@@ -54,7 +54,7 @@ const JudgeDashboard = () => {
                   style={{  paddingLeft: "20px" }}
                 />
                 <span
-                  onClick={() => handleNavigate("new-cases")}
+                  onClick={() => handleNavigate("ongoing-cases")}
                   style={{ paddingLeft: "20px" }}
                 >
                   Ongoing Cases 

@@ -1,21 +1,23 @@
 
 .jsuf {
-    width: 60%;
-    height: 48%;
+    
+    margin:20px;
     padding: 10px;
 }
 
 .jsuf .input-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px; 
+    /* margin-bottom: 20px;  */
     width: auto;/* or however much space you want between rows */
+   
 }
 
 .jsuf .form {
     display: flex;  
     flex-wrap: wrap;
     justify-content: space-between;
+    
 }
 
 .jsuf .form-group {
@@ -34,7 +36,12 @@
 .jsuf .form-control {
     width: 100%;
 }
-.button{
-    display: flex;
-    padding-left: 100px;
+.jsuf button{
+    background-color:green;
+    color: white;
+    margin-left: 400px;
 }
+
+.jsuf button:hover{
+    background-color: rgb(7, 105, 7);
+}   

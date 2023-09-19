@@ -14,6 +14,8 @@ import CaseDetailsRoute from "./components/CaseDetials";
 import CaseDetails from "./components/CaseDetials";
 import JudgeDashboard from "./pages/JudgeDashboard"
 import SignUpCard from "./components/SignUpCard";
+import AssignedCases from "./components/AssignedCases";
+import OngoingCases from "./components/OngoingCases";
 
 const App = () => {
   return (
@@ -42,13 +44,12 @@ const App = () => {
         <Route path="/login/judge-dashboard" element={<JudgeDashboard />}>
           {/* Nested routes for AdminDashboard */}
           <Route path="" element={<Dashboard />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="new-cases" element={<CaseType />} />
-          <Route path="new-cases/civil-case" element={<NewCivilCaseCard isViewMode={true} />}/>
-          <Route path="new-cases/criminal-case" element={<NewCriminalCaseCard />}/>
-          <Route path="cases" element={<CaseList />}/>
-          <Route path="cases/caseDetails/:documentId" element={<CaseDetails/>} />
-          
+          <Route path="assigned-cases" element={<AssignedCases />} />
+          {/* <Route path="new-cases" element={<AssignedCases />} /> */}
+
+          <Route path="ongoing-cases" element={<OngoingCases />}/>
+          <Route path="assigned-cases/caseDetails/:documentId" element={<CaseDetails/>} />
+          <Route path="ongoing-cases/caseDetails/:documentId" element={<CaseDetails/>} />
 
 
           

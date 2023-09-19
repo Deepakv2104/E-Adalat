@@ -1,14 +1,33 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import { useNavigate } from 'react-router-dom';
 import { addDoc, collection } from "@firebase/firestore";
 import LocationBar from "./location";
 import { firestore } from "../firebase"; // Assuming you've set up firebase.js as explained before
 import "../styles/JudgeSignupForm.css";
 
+import CivilTypeDropdown from "./CivilDropdown";
+import { ToastContainer ,toast} from "react-toastify";
+import CaseTypeForm from "./CaseTypeForm";
+
 const JudgeSignupForm = () => {
+  const  Navigate = useNavigate();
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCourt, setSelectedCourt] = useState("");
+  const [caseType, setCaseType] = useState(''); 
+const [specificType, setSpecificType] = useState('');
+
+  const [selectedCivilType, setSelectedCivilType] = useState("");
+  const [gender, setGender] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
     gender: "",
+    state: "",
+    city: "",
+    court: "",
+    caseType:"",
+    specificType:"",
     dateOfBirth: "",
     email: "",
     phoneNumber: "",
@@ -28,6 +47,15 @@ const JudgeSignupForm = () => {
     bio: "",
     // ... (other fields can be added similarly)
   });
+  const generateRandomNumber = () => {
+    const randomNumber = Math.floor(1000000 + Math.random() * 9000000);
+    return randomNumber.toString().padStart(11, "0"); // Ensure it's 11 digits
+  };
+  const handleSelectedOptions = (state, city, court) => {
+    setSelectedState(state);
+    setSelectedCity(city);
+    setSelectedCourt(court);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,9 +64,38 @@ const JudgeSignupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const randomJudgeId = generateRandomNumber();
+    const updatedFormData = {
+      ...formData,
+      judgeId: randomJudgeId,
+      caseType: caseType,
+      specificType: specificType,
+      gender: gender,
+      state: selectedState,
+      city: selectedCity,
+      court: selectedCourt,
+    };
+    console.log(updatedFormData);
+    setGender("");
+    setSelectedState("");
+    setSelectedCity("");
+    setSelectedCourt("");
+    setCaseType("");
+    setSpecificType("");
+
     try {
-      await collection(firestore, "judges").add(formData);
+      await addDoc(collection(firestore, "Judges"), updatedFormData);
       console.log("Data added successfully");
+      toast.success("Signed up successfully!", {
+        position: "top-right",
+        autoClose: 2000, // 5 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      Navigate('/login')
       // Reset form or navigate to another page
     } catch (error) {
       console.error("Error adding document: ", error);
@@ -46,9 +103,15 @@ const JudgeSignupForm = () => {
   };
 
   return (
-    <div className="jsuf">
+    <div className="jsuf" style={{borderStyle:'solid'}}>
       <Form onSubmit={handleSubmit}>
-        <div className="input-row">
+        <div className="Input-row">
+        <FormGroup>
+          <CaseTypeForm   caseType={caseType} 
+    setCaseType={setCaseType}
+    specificType={specificType}
+    setSpecificType={setSpecificType}/>
+          </FormGroup>
           <FormGroup>
             <Label for="fullName">Full Name</Label>
             <Input
@@ -60,25 +123,48 @@ const JudgeSignupForm = () => {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="gender">Gender</Label>
-            <Input
-              type="select"
-              name="gender"
-              id="gender"
-              value={formData.gender}
-              onChange={handleChange}
-            >
-              <option value="" disabled>
-                Select Gender
-              </option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </Input>
-          </FormGroup>
+        <p>Please select gender:</p>
+        <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", paddingLeft: "20px", paddingRight: "20px" }}>
+                <Input
+                    type="radio"
+                    id="male"
+                    name="gender"
+                    value="male"
+                    onChange={(e) => setGender(e.target.value)}
+                />
+                  <Label for="male">Male</Label>
+            </div>
+
+            <div style={{ display: "flex", paddingLeft: "20px", paddingRight: "20px" }}>
+                <Input
+                    type="radio"
+                    id="female"
+                    name="gender"
+                    value="female"
+                    onChange={(e) => setGender(e.target.value)}
+                /> 
+                <Label for="female">Female</Label>
+            </div>
+
+            <div style={{ display: "flex", paddingLeft: "20px" }}>
+                <Input
+                    type="radio"
+                    id="others"
+                    name="gender"
+                    value="others"
+                    onChange={(e) => setGender(e.target.value)}
+                />
+                <Label for="others">Others</Label>
+            </div>
+        </div>
+    </FormGroup>
+          <div style={{paddingBottom:'10px',display:'flex'}}>
+          <LocationBar  onSelectedOptions={handleSelectedOptions} />
+          </div>
         </div>
 
-        <div className="input-row">
+        <div className="Input-row">
           <FormGroup>
             <Label for="dateOfBirth">Date of Birth</Label>
             <Input
@@ -101,7 +187,7 @@ const JudgeSignupForm = () => {
           </FormGroup>
         </div>
 
-        <div className="input-row">
+        <div className="Input-row">
           <FormGroup>
             <Label for="phoneNumber">Phone Number</Label>
             <Input
@@ -124,7 +210,7 @@ const JudgeSignupForm = () => {
           </FormGroup>
         </div>
 
-        <div className="input-row">
+        <div className="Input-row">
           <FormGroup>
             <Label for="judgeID">Judge ID/Badge Number</Label>
             <Input
@@ -147,7 +233,7 @@ const JudgeSignupForm = () => {
           </FormGroup>
         </div>
 
-        <div className="input-row">
+        <div className="Input-row">
           <FormGroup>
             <Label for="jurisdiction">Jurisdiction Level</Label>
             <Input
@@ -170,7 +256,7 @@ const JudgeSignupForm = () => {
           </FormGroup>
         </div>
 
-        <div className="input-row">
+        <div className="Input-row">
           <FormGroup>
             <Label for="yearsOfExperience">Years of Experience</Label>
             <Input
@@ -193,7 +279,7 @@ const JudgeSignupForm = () => {
           </FormGroup>
         </div>
 
-        <div className="input-row">
+        <div className="Input-row">
           <FormGroup>
             <Label for="timeZone">Time Zone</Label>
             <Input
@@ -216,7 +302,7 @@ const JudgeSignupForm = () => {
           </FormGroup>
         </div>
 
-        <div className="input-row">
+        <div className="Input-row">
           <FormGroup>
             <Label for="otherDegrees">Other Degrees/Certifications</Label>
             <Input
@@ -239,7 +325,7 @@ const JudgeSignupForm = () => {
           </FormGroup>
         </div>
 
-        <div className="input-row">
+        <div className="Input-row">
           <FormGroup>
             <Label for="otherLanguages">Other Languages</Label>
             <Input
@@ -275,9 +361,12 @@ const JudgeSignupForm = () => {
             onChange={handleChange}
           />
         </FormGroup>
-        {/* Add similar FormGroup blocks for other inputs */}
-        <Button type="submit">Submit</Button>
+        {/* Add similar FormGroup blocks for other Inputs */}
+        <Button   type="submit">
+          Submit
+        </Button>
       </Form>
+     
     </div>
   );
 };

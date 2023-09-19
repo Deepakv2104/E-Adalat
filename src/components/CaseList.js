@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams ,useNavigate} from "react-router-dom";
 import { collection, getDocs, query, where, orderBy, startAt, endAt } from "@firebase/firestore";
 import { firestore } from "../firebase";
+import { useLocation } from "react-router-dom";
 import { Table, Input } from "reactstrap";
 import '../styles/CaseList.css'
 
@@ -9,11 +10,21 @@ const CaseList = () => {
     const navigate = useNavigate();
   const [cases, setCases] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
   const handleCaseClick = (caseId) => {
     // Redirect to the NewCivilCaseCard component with case data in view mode
     
     navigate(`caseDetails/${caseId}`);
   };
+  // Determine the title based on the URL
+  const getTitle = () => {
+    console.log(location.pathname)
+    if (location.pathname.includes('judge-Dashboard/assigned-cases')) {
+      return 'Assigned Cases';
+    }
+    return 'List of Civil Cases';
+  }
+
   useEffect(() => {
     // Fetch cases from the "CivilCases" collection
     const fetchData = async () => {
@@ -58,7 +69,7 @@ const CaseList = () => {
         boxShadow: "0 5px 25px -5px rgba(0,0,0,2.1)",
         overflow: "scroll",
       }}>
-      <h2>List of Civil Cases</h2>
+      <h2>{getTitle()}</h2>
       <Input
         type="text"
         placeholder="Search by Case Number"

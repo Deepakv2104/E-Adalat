@@ -5,6 +5,7 @@ import JudgeSignupForm from './JudgeSignupForm';
 import LawyerSignupForm from './LawyerSignupForm';
 import AdminSignupForm from './AdminSignupForm';
 import LitigantSignupForm from './LitigantSignupForm';
+import { ToastContainer,toast } from 'react-toastify';
 
 
 
@@ -77,8 +78,8 @@ const SignUpCard = () => {
 
   return (
     <div className="signup-card">
-      <div className="card-inner">
-        <h2>{isSignupVisible ? 'Sign In' : 'sign Up'}</h2>
+      <div className="card-iner">
+        <h2 style={{textAlign:'center'}}>{isSignupVisible ? 'Sign In' : 'Sign Up'}</h2>
         <div className="form-group" style={{ display: 'flex' }}>
           <label htmlFor="role" style={{ paddingRight: '30px' }}>
             Select Role:
@@ -95,10 +96,12 @@ const SignUpCard = () => {
             <option value="lawyer">Lawyer</option>
           </select>
           
+          </div>
+          {renderForm()}
         </div>
-        {renderForm()}
+      
         
-      </div>
+      <ToastContainer/>
       
     </div>
   );
