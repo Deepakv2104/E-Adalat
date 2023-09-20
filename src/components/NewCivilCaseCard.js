@@ -43,6 +43,7 @@ const NewCivilCaseCard = ({ caseData, isViewMode }) => {
   const [selectedCivilType, setSelectedCivilType] = useState("");
   const [caseType, setCaseType] = useState(''); 
   const [specificType, setSpecificType] = useState('');
+  const [status, setStatus] = useState('');
 
   const [formData, setFormData] = useState({
     title: "",
@@ -57,6 +58,7 @@ const NewCivilCaseCard = ({ caseData, isViewMode }) => {
     state: "",
     city: "",
     court: "",
+    status:"",
     
     // firTiming: "",
     // numberOfAccused: "",
@@ -86,6 +88,7 @@ const NewCivilCaseCard = ({ caseData, isViewMode }) => {
     const randomCNRNumber = generateRandomNumber();
     const updatedFormData = {
       ...formData,
+      status: status,
       caseType: caseType,
       specificType: specificType,
       caseNumber: randomCNRNumber,
@@ -101,6 +104,7 @@ const NewCivilCaseCard = ({ caseData, isViewMode }) => {
     setSelectedCivilType("");
     setCaseType("");
     setSpecificType("");
+    setStatus("");
 
     try {
       // Add the chargesheet data to the "Cases" collection

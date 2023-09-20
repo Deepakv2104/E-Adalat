@@ -96,7 +96,7 @@ const CaseList = () => {
               <td>{c.caseNumber}</td>
               
               <td>{c.dateoffiling}</td>
-              <td>{c.state}</td>
+              <td>{c.status}</td>
               {/* Add more table cells for other case properties */}
             </tr>
             

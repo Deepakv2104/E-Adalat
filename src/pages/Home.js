@@ -4,6 +4,7 @@ import './Home.css'
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from '../components/Navbar';
+import VideoMeeting from '../components/VideoMeeting'
 import LoginCard from '../components/LoginCard';
  
 const Home = () => {
@@ -18,6 +19,7 @@ const Home = () => {
       <Navbar/>
       <div style={{paddingTop:'80px'}}>
       <Outlet/>
+      
       </div>
       {/* <Sidebar/> */}
       {/* <Login/> */}

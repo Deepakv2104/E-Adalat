@@ -38,7 +38,7 @@ function Navbar() {
                 <a className="nav-link active" aria-current="page" href="/" style={{color:'white'}}>Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#" style={{color:'white'}}>Link</a>
+                <a className="nav-link" href="meet" style={{color:'white'}}>Link</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link disabled" aria-disabled="true" style={{color:'white'}}>Disabled</a>

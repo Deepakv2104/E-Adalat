@@ -16,14 +16,16 @@ import JudgeDashboard from "./pages/JudgeDashboard"
 import SignUpCard from "./components/SignUpCard";
 import AssignedCases from "./components/AssignedCases";
 import OngoingCases from "./components/OngoingCases";
+import VideoMeeting from "./components/VideoMeeting";
 
 const App = () => {
   return (
     <div>
       <Routes>
         <Route path="/" element={<Home />}>
-          <Route path="login" element={<LoginCard />} />
+          <Route path="login" element={<VideoMeeting />} />
           <Route path='sign-up' element={<SignUpCard/>}/>
+          <Route path='meet'   element={<VideoMeeting/>}/>
         </Route>
         <Route path="/login/admin-dashboard" element={<AdminDashboard />}>
           {/* Nested routes for AdminDashboard */}
