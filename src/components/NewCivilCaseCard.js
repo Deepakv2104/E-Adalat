@@ -152,12 +152,12 @@ const NewCivilCaseCard = ({ caseData, isViewMode }) => {
 
         // Now that the case is added, distribute it to a judge
         const assignedJudge = await CaseDistributor(updatedFormData);
-        console.log(assignedJudge);
-        if (assignedJudge) {
-          console.log("Case assigned to: ", assignedJudge.name); // Assuming the judge object has a 'name' property
-        } else {
-          console.log("No matching judge found for the case");
-        }
+        // console.log(assignedJudge);
+        // if (assignedJudge) {
+        //   console.log("Case assigned to: ", assignedJudge.name); // Assuming the judge object has a 'name' property
+        // } else {
+        //   console.log("No matching judge found for the case");
+        // }
       // Notify success with a toast
 
       toast.success("Record submitted successfully!", {
@@ -226,7 +226,7 @@ const NewCivilCaseCard = ({ caseData, isViewMode }) => {
           <Form onSubmit={handleSubmit}>
            <FormGroup style={{}}>
            <LocationBar  onSelectedOptions={handleSelectedOptions} />
-           <p  style={{paddingTop:'20px',fontSize:'16px'}}>
+           <div style={{paddingTop:'20px',fontSize:'16px'}}>
            <CaseTypeForm
            
            caseType={caseType}
@@ -234,7 +234,7 @@ const NewCivilCaseCard = ({ caseData, isViewMode }) => {
            specificType={specificType}
            setSpecificType={setSpecificType}
          />
-           </p>
+           </div>
            </FormGroup>
             <FormGroup>
               <Label for="title">Title </Label>

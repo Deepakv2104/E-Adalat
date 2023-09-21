@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import {
   collection,
@@ -22,7 +22,9 @@ import {
   FaTimes
 } from "react-icons/fa";
 import '../styles/AssignedCases.css'
+import JudgeContext from "../JudgeContext";
 const AssignedCases = () => {
+  const {judgeId} = useContext(JudgeContext);
   const location = useLocation();
   const navigate = useNavigate();
   const [cases, setCases] = useState([]);
@@ -32,7 +34,7 @@ const AssignedCases = () => {
     navigate(`caseDetails/${caseId}`);
   };
   
-  const judgeId = "00001703540";
+ 
 
   useEffect(() => {
     if (!judgeId) return;

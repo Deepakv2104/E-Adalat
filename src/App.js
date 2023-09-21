@@ -1,10 +1,13 @@
-import React from "react";
+import React ,{useState}from "react";
 import { Routes, Route } from "react-router-dom"; // Import Routes and Route
 
 import AdminDashboard from "./pages/AdminDashboard";
 import Dashboard from "./components/Dashboard";
 import Home from "./pages/Home";
-
+import JudgeSignupForm from './components/JudgeSignupForm';
+import LawyerSignupForm from './components/LawyerSignupForm';
+import AdminSignupForm from './components/AdminSignupForm';
+import LitigantSignupForm from './components/LitigantSignupForm';
 import NewCivilCaseCard from "./components/NewCivilCaseCard";
 import LoginCard from "./components/LoginCard";
 import CaseType from "./components/CaseType";
@@ -17,15 +20,24 @@ import SignUpCard from "./components/SignUpCard";
 import AssignedCases from "./components/AssignedCases";
 import OngoingCases from "./components/OngoingCases";
 import VideoMeeting from "./components/VideoMeeting";
+import JudgeContext from './JudgeContext';
 
 const App = () => {
+ 
+  const [judgeId, setJudgeId] = useState(null);
   return (
+    <JudgeContext.Provider value={{ judgeId, setJudgeId }}>
     <div>
       <Routes>
-        <Route path="/" element={<Home />}>
-          <Route path="login" element={<VideoMeeting />} />
-          <Route path='sign-up' element={<SignUpCard/>}/>
-          <Route path='meet'   element={<VideoMeeting/>}/>
+        <Route path="/" element={<Home/>}>
+          <Route path="login" element={<LoginCard setJudgeId={setJudgeId}/>} />
+          <Route path="sign-up" element={<SignUpCard />}>
+      <Route path="judge-signup-form" element={<JudgeSignupForm />} />
+      <Route path="litigant-signup-form" element={<LitigantSignupForm />} />
+      <Route path="admin-signup-form" element={<AdminSignupForm />} />
+      <Route path="lawyer-signup-form" element={<LawyerSignupForm />} />
+    </Route>
+          {/* <Route path='meet'   element={<VideoMeeting/>}/> */}
         </Route>
         <Route path="/login/admin-dashboard" element={<AdminDashboard />}>
           {/* Nested routes for AdminDashboard */}
@@ -43,6 +55,7 @@ const App = () => {
 
          
         </Route>
+        
         <Route path="/login/judge-dashboard" element={<JudgeDashboard />}>
           {/* Nested routes for AdminDashboard */}
           <Route path="" element={<Dashboard />} />
@@ -62,6 +75,7 @@ const App = () => {
        
       </Routes>
     </div>
+    </JudgeContext.Provider>
   );
 };
 

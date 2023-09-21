@@ -5,6 +5,8 @@ import { addDoc, collection } from "@firebase/firestore";
 import LocationBar from "./location";
 import { firestore } from "../firebase"; // Assuming you've set up firebase.js as explained before
 import "../styles/JudgeSignupForm.css";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
+import { auth } from "../firebase";  // Assuming you've set up auth in your firebase.js
 
 import CivilTypeDropdown from "./CivilDropdown";
 import { ToastContainer ,toast} from "react-toastify";
@@ -16,6 +18,8 @@ const JudgeSignupForm = () => {
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedCourt, setSelectedCourt] = useState("");
   const [caseType, setCaseType] = useState(''); 
+  const[email,setEmail] = useState('');
+  const[password,setPassword] = useState('')
 const [specificType, setSpecificType] = useState('');
 
   const [selectedCivilType, setSelectedCivilType] = useState("");
@@ -30,9 +34,10 @@ const [specificType, setSpecificType] = useState('');
     specificType:"",
     dateOfBirth: "",
     email: "",
+    password:"",
     phoneNumber: "",
     address: "",
-    judgeID: "",
+    
     courtName: "",
     jurisdiction: "",
     specialization: "",
@@ -49,8 +54,10 @@ const [specificType, setSpecificType] = useState('');
   });
   const generateRandomNumber = () => {
     const randomNumber = Math.floor(1000000 + Math.random() * 9000000);
-    return randomNumber.toString().padStart(11, "0"); // Ensure it's 11 digits
+    return randomNumber.toString().padStart(8, "0"); // Ensure it's 11 digits
   };
+ 
+  
   const handleSelectedOptions = (state, city, court) => {
     setSelectedState(state);
     setSelectedCity(city);
@@ -61,45 +68,81 @@ const [specificType, setSpecificType] = useState('');
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
-
+  const isValidEmail = (email) => {
+    // Simple email regex pattern
+    const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return pattern.test(email);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const randomJudgeId = generateRandomNumber();
-    const updatedFormData = {
-      ...formData,
-      judgeId: randomJudgeId,
-      caseType: caseType,
-      specificType: specificType,
-      gender: gender,
-      state: selectedState,
-      city: selectedCity,
-      court: selectedCourt,
-    };
-    console.log(updatedFormData);
-    setGender("");
-    setSelectedState("");
-    setSelectedCity("");
-    setSelectedCourt("");
-    setCaseType("");
-    setSpecificType("");
-
-    try {
-      await addDoc(collection(firestore, "Judges"), updatedFormData);
-      console.log("Data added successfully");
-      toast.success("Signed up successfully!", {
+    if (!isValidEmail(formData.email)) {
+      toast.error("Invalid email address!", {
         position: "top-right",
-        autoClose: 2000, // 5 seconds
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
       });
-      Navigate('/login')
-      // Reset form or navigate to another page
-    } catch (error) {
-      console.error("Error adding document: ", error);
+      return;
     }
+    const randomJudgeId = generateRandomNumber();
+  
+
+
+   
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+      console.log("User UID:", user.uid);  
+
+      const updatedFormData = {
+        ...formData,
+        judgeId: user.uid,
+        caseType: caseType,
+        specificType: specificType,
+        gender: gender,
+        state: selectedState,
+        city: selectedCity,
+        court: selectedCourt,
+      };
+      console.log(updatedFormData);
+
+
+      await addDoc(collection(firestore, "Judges"), updatedFormData);
+      toast.success("Signed up successfully!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      Navigate('/login');
+      // Resetting state after successful operations
+      setGender("");
+      setSelectedState("");
+      setSelectedCity("");
+      setSelectedCourt("");
+      setCaseType("");
+      setSpecificType("");
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error(`Error: ${error.message}`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+   
+
+  
   };
 
   return (
@@ -185,6 +228,16 @@ const [specificType, setSpecificType] = useState('');
               onChange={handleChange}
             />
           </FormGroup>
+          <FormGroup>
+            <Label for="password">password</Label>
+            <Input
+              type="text"
+              name="password"
+              id="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </FormGroup>
         </div>
 
         <div className="Input-row">
@@ -198,6 +251,7 @@ const [specificType, setSpecificType] = useState('');
               onChange={handleChange}
             />
           </FormGroup>
+
           <FormGroup>
             <Label for="address">Address</Label>
             <Input
@@ -209,6 +263,7 @@ const [specificType, setSpecificType] = useState('');
             />
           </FormGroup>
         </div>
+      
 
         <div className="Input-row">
           <FormGroup>

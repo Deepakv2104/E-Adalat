@@ -58,7 +58,7 @@ const CaseTypeForm = ({ caseType, setCaseType, specificType, setSpecificType }) 
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
+        
            <div style={{display:'flex'}}>
            <FormGroup>
                 <Label for="caseType">Case Type</Label>
@@ -88,7 +88,7 @@ const CaseTypeForm = ({ caseType, setCaseType, specificType, setSpecificType }) 
 
            </div>
             
-        </Form>
+       
     );
 };
 

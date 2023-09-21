@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext} from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import JudgeContext from "../JudgeContext";
 import {
   collection,
   getDocs,
@@ -23,6 +24,7 @@ import {
 } from "react-icons/fa";
 
 const OngoingCases = () => {
+   const {judgeId }= useContext(JudgeContext); 
   const location = useLocation();
   const navigate = useNavigate();
   const [cases, setCases] = useState([]);
@@ -32,7 +34,7 @@ const OngoingCases = () => {
     navigate(`caseDetails/${caseId}`);
   };
   
-  const judgeId = "00001703540";
+
 
   useEffect(() => {
     if (!judgeId) return;

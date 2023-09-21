@@ -7,7 +7,9 @@ import AdminLoginForm from './AdminLoginForm';
 import LawyerLoginForm from './LawyerLoginForm';
 
 
-const LoginCard = () => {
+const LoginCard = ({ setJudgeId }) => {
+  console.log(typeof setJudgeId); 
+
   const [isSignupVisible, setIsSignupVisible] = useState(false);
   const [selectedRole, setSelectedRole] = useState('litigant');
   const navigate = useNavigate();
@@ -45,7 +47,7 @@ const LoginCard = () => {
     } else {
         switch (selectedRole) {
             case 'judge':
-                return <JudgeLoginForm />;
+                return <JudgeLoginForm setJudgeId={setJudgeId}/>;
             case 'litigant':
                 return <LitigantLoginForm />;
             case 'admin':
